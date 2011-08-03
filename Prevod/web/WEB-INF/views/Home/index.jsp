@@ -1,21 +1,16 @@
-<%@page import="mutabene.model.entity.Todo"%>
-<%@page import="java.util.List"%>
-<%@page import="mutabene.manager.TodoManager"%>
+
 <%@include file="../../parts/header.jspf"%>
 <%@page pageEncoding="UTF-8"%>
 <%@page session="true"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <h2>Vítejte!</h2>
     <p>
         Vítejte na stránkách MUTABENE. ...asfj oaijo avhjohoúhg sohgo dfhgphgdf hgodfh ...
     </p>
 <div class="img"><img src="<spring:theme code="background"/>"/></div>
-                <%
-            TodoManager tm = new TodoManager();
-            tm.add("2", "s","d", "u");
-            List<Todo> list = tm.getTodos("2");
-            if (list.size() == 0) {
-                out.print("Ahoj");
-            }
-        %>
+
+<c:forEach items="${todos}" var="todo">
+    <c:out value="${todo['author']}"/>
+</c:forEach>
 
 <%@include file="../../parts/footer.jspf"%>

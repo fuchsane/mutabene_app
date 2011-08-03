@@ -9,17 +9,19 @@ import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import mutabene.model.entity.Todo;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Anysek
  */
-//public class TodoManager extends GenericDataManager<Todo> {
-public class TodoManager {
+@Service
+public class TodoManager extends GenericDataManager<Todo> {
+//public class TodoManager {
     	public void add(String userId, String summery, String description, String url) {
 		synchronized (this) {
-			EntityManager em = EMF.get().createEntityManager();
-                        //EntityManager em = emfInstance.createEntityManager();
+			//EntityManager em = EMF.get().createEntityManager();
+                        EntityManager em = emfInstance.createEntityManager();
 			Todo todo = new Todo(userId, summery, description, url);
 			em.persist(todo);
 			em.close();
@@ -27,11 +29,17 @@ public class TodoManager {
 	} 
         
         public List<Todo> getTodos(String userId) {
-		EntityManager em = EMF.get().createEntityManager();
-		Query q = em.createQuery("select t from Todo t where t.author = :userId");
-		q.setParameter("userId", userId);
+            try{
+		EntityManager em = emfInstance.createEntityManager();
+		//Query q = em.createQuery("select t from Todo t where t.author = :userId");
+                Query q = em.createQuery("select t from Todo t");
+		//q.setParameter("userId", userId);
 		List<Todo> todos = q.getResultList();
 		return todos;
+            }catch(Exception e){
+                   return null; 
+                    
+                }
 	}
 
     public boolean add(Todo object) {

@@ -19,11 +19,15 @@ public class Todo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+  
 	private String author;
 
 	private String summary;
+        
 	private String description;
+        
 	private String url;
+        
 	boolean finished;
         
         public Todo() {}
